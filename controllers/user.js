@@ -16,7 +16,8 @@ const renewUserToken = async (req = request, res = response) => {
         ok: true,
         status: 200,
         msg: 'token checked',
-        usuario,
+        userId: usuario.id,
+        name: usuario.name,
         token
     })
 }
@@ -56,7 +57,8 @@ const loginUser = async (req = request, res = response) => {
             ok: true,
             status: 200,
             msg: 'success login',
-            userId: usuario.uid,
+            userId: usuario.id,
+            name: usuario.name,
             token,
             date: moment(new Date().getTime()),
             ip: req.ip
@@ -98,7 +100,8 @@ const registerUser = async (req = request, res = response) => {
         res.status(200).json({
             ok: true,
             msg: 'success register',
-            usuario,
+            userId: usuario.id,
+            name: usuario.name,
             token,
             date: moment(new Date().getTime()),
             ip: req.ip

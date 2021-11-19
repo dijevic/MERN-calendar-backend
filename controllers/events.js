@@ -3,6 +3,7 @@ const Evento = require('../models/Events')
 
 
 const getEvents = async (req = request, res = response) => {
+
     // query != parametros ( no son obligatorios)
 
     const eventos = await Evento.find()
@@ -26,14 +27,14 @@ const newEvent = async (req = request, res = response) => {
         const evento = await new Evento({ title, start, end, notes })
         evento.usuario = req.usuario.id
 
-        const newUser = await evento.save()
+        const newEvent = await evento.save()
 
 
         res.json({
             ok: true,
             status: 200,
             msg: 'success',
-            newUser
+            newEvent
 
 
         })
