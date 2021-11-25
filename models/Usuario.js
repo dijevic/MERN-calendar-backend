@@ -14,6 +14,16 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    resetToken: {
+        type: String,
+        required: false,
+        default: null
+    },
+    lastPassword: {
+        type: String,
+        required: false,
+        default: null
     }
 
 

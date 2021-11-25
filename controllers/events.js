@@ -1,4 +1,5 @@
 const { response, request } = require('express')
+const checkDate = require('../helpers/checkDateValidator')
 const Evento = require('../models/Events')
 
 
@@ -10,12 +11,12 @@ const getEvents = async (req = request, res = response) => {
         .populate('usuario', 'name')
 
     const total = await Evento.countDocuments()
-
+    const finalEvents = await checkDate(eventos)
     res.json({
         ok: true,
         status: 200,
         msg: 'success',
-        eventos,
+        eventos: finalEvents,
         total
 
     })
@@ -73,7 +74,7 @@ const updateEvent = async (req = request, res = response) => {
 
         const data = {
             ...req.body,
-            usuario: req.usuari
+            usuario: req.usuario
         }
 
         const eventUpdate = await Evento.findByIdAndUpdate(idEvent, data, { new: true })
@@ -155,6 +156,7 @@ const deleteEvent = async (req = request, res = response) => {
 
 
 }
+
 
 
 module.exports = {

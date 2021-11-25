@@ -6,7 +6,7 @@ const { getEvents, newEvent, updateEvent, deleteEvent } = require('../controller
 const isDate = require('../helpers/isDate')
 
 const validarCampos = require('../middlewares/validate')
-const validarJwt = require('../middlewares/verifyJWT')
+const { validarJwt } = require('../middlewares/verifyJWT')
 const router = Router()
 
 
@@ -34,6 +34,14 @@ router.put('/:id',
         validarCampos
     ], updateEvent)
 
-router.delete('/:id', deleteEvent)
+router.delete('/:id',
+    [
+        check('id', 'mongo id no valido').isMongoId(),
+        validarCampos
+    ],
+
+    deleteEvent)
+
+
 
 module.exports = router
