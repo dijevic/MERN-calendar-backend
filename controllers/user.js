@@ -135,7 +135,7 @@ const ForgotPassword = async (req = request, res = response) => {
 
 
         // Todo: camabiar a vriable d entorno
-        const link = `https://calndar-mern2021.herokuapp.com/auth/change-password/${resetToken}`
+        const link = `https://trusting-stonebraker-ba980b.netlify.app/auth/change-password/${resetToken}`
 
         sendRecoverEmail(usuario.email, link)
 
@@ -215,7 +215,7 @@ const registrationCheckingEmail = async (req = request, res = response) => {
 
         // genero JWT 
         const token = await generarRegistrationJWT(email, password, name)
-        const link = `https://calndar-mern2021.herokuapp.com/auth/finish-registration/${token}`
+        const link = `https://trusting-stonebraker-ba980b.netlify.app/auth/finish-registration/${token}`
         // envio el email
         // http://localhost:3000/auth/finish-registration/121231231
         try {
