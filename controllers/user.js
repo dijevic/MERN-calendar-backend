@@ -217,7 +217,7 @@ const registrationCheckingEmail = async (req = request, res = response) => {
         const token = await generarRegistrationJWT(email, password, name)
         const link = `https://trusting-stonebraker-ba980b.netlify.app/auth/finish-registration/${token}`
         // envio el email
-        // http://localhost:3000/auth/finish-registration/121231231
+        // https://trusting-stonebraker-ba980b.netlify.app/auth/finish-registration/121231231
         try {
 
             sendRegistrationEmail(email, link)
@@ -245,12 +245,61 @@ const registrationCheckingEmail = async (req = request, res = response) => {
     }
 }
 
+const updateUser = async (req = request, res = response) => {
+
+
+    try {
+
+        let { resetToken, id, email, ...body } = req.body
+
+        let usuario = req.usuario
+
+        if (body.password) {
+            body.password = encriptar(body.password)
+        }
+
+        if (body.password == '') {
+            delete body.password
+        }
+
+        if (body.name == '') {
+            delete body.name
+        }
+
+
+
+        const usuarioActualizado = await Usuario.findByIdAndUpdate(usuario.id, body, { new: true })
+        const token = await generaJWT(usuario.id, usuarioActualizado.name)
+
+        res.status(200).json({
+            ok: true,
+            status: 200,
+            msg: 'user Updated !',
+            id: usuarioActualizado.id,
+            name: usuarioActualizado.name,
+            email: usuarioActualizado.email,
+            token,
+        })
+
+    } catch (e) {
+        console.log(e)
+        throw new Error(e)
+    }
+}
+
+
+
+
+
+
+
 module.exports = {
     renewUserToken,
     loginUser,
     registerUser,
     ForgotPassword,
     changePaswword,
-    registrationCheckingEmail
+    registrationCheckingEmail,
+    updateUser
 
 }

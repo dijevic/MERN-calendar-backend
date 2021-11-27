@@ -9,7 +9,7 @@ const validarJwt = async (req = request, res = response, next) => {
     let token = req.header('x-token')
 
     if (!token) {
-        return res.status(401).json({ message: `unauthorized, missing JWT` })
+        return res.status(401).json({ msg: `unauthorized, missing JWT` })
     }
 
     try {
@@ -17,7 +17,7 @@ const validarJwt = async (req = request, res = response, next) => {
         const { uid, name } = jwt.verify(token, process.env.PRIVATESECRETJWTKEY)
         const usuario = await Usuario.findById(uid)
         if (!usuario) {
-            return res.status(401).json({ message: `user not found` })
+            return res.status(401).json({ msg: `user not found` })
         }
 
         // paso mi usuario a mi request y lo dejo ahi seteado

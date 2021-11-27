@@ -8,7 +8,8 @@ const {
     registerUser,
     ForgotPassword,
     changePaswword,
-    registrationCheckingEmail, } = require('../controllers/user')
+    registrationCheckingEmail,
+    updateUser } = require('../controllers/user')
 
 const validarCampos = require('../middlewares/validate')
 const { validarJwt, validarResetJwt, validarRegistrationJWT } = require('../middlewares/verifyJWT')
@@ -67,6 +68,13 @@ router.post('/start-registration',
 
     ], registrationCheckingEmail)
 
+
+router.put('/update-user',
+
+    [
+        validarJwt,
+        validarCampos
+    ], updateUser)
 
 module.exports = router
 

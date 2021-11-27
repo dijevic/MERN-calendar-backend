@@ -20,11 +20,7 @@ const UserSchema = new Schema({
         required: false,
         default: null
     },
-    lastPassword: {
-        type: String,
-        required: false,
-        default: null
-    }
+
 
 
 });
