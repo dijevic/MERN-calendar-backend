@@ -19,6 +19,7 @@ const renewUserToken = async (req = request, res = response) => {
         msg: 'token checked',
         userId: usuario.id,
         name: usuario.name,
+
         token
     })
 }
@@ -77,11 +78,12 @@ const registerUser = async (req = request, res = response) => {
 
 
     try {
-        let { password, } = req.userData
+        let { password } = req.userData
 
 
         const data = {
-            ...req.userData,
+            name: req.userData.name.toLowerCase(),
+            email: req.userData.email.toLowerCase(),
             password: encriptar(password)
 
         }
@@ -250,21 +252,40 @@ const updateUser = async (req = request, res = response) => {
 
     try {
 
-        let { resetToken, id, email, ...body } = req.body
 
+        let { resetToken, id, email, ...body } = req.body
         let usuario = req.usuario
+        const arrBody = Object.values(body)
+
+
+        if (arrBody.length === 0) {
+            return res.status(400).json({
+                msg: `body is required`,
+                status: 404,
+                ok: false
+
+            })
+        }
+
+
 
         if (body.password) {
             body.password = encriptar(body.password)
         }
 
-        if (body.password == '') {
+        if (body.name) {
+            body.name = body.name.toLowerCase()
+        }
+
+        if (body.password.trim() == '') {
             delete body.password
         }
 
-        if (body.name == '') {
+        if (body.name.trim() == '') {
             delete body.name
         }
+
+
 
 
 

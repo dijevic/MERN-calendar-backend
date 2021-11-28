@@ -1,7 +1,7 @@
 // path : '/api/auth'
 
 const { Router } = require('express')
-const { check } = require('express-validator')
+const { check, body } = require('express-validator')
 const {
     renewUserToken,
     loginUser,
@@ -53,9 +53,9 @@ router.put('/forgot-password',
 router.put('/change-password',
 
     [
+        validarResetJwt,
         check('password', 'una contrasena es requerida').not().isEmpty(),
         check('password', 'debe ser de mas de 6 digitos la clave').isLength({ min: 6 }),
-        validarResetJwt,
         validarCampos
     ], changePaswword)
 
@@ -73,6 +73,7 @@ router.put('/update-user',
 
     [
         validarJwt,
+        body().not().isEmpty(),
         validarCampos
     ], updateUser)
 
