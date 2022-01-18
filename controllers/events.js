@@ -25,7 +25,12 @@ const newEvent = async (req = request, res = response) => {
     try {
         const { title, start, end, notes } = req.body
 
-        const evento = await new Evento({ title, start, end, notes })
+        const evento = await new Evento({
+            title: title.toLowerCase(),
+            notes: notes.toLowerCase(),
+            start,
+            end
+        })
         evento.usuario = req.usuario.id
 
         const newEvent = await evento.save()
